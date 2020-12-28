@@ -12,7 +12,7 @@
         "adonisjs",
         "adonis-app"
     ],
-    "author": "Edmond Gihozo",
+    "author": "gihozoedmond@gmail.com",
     "license": "MIT",
     "private": true,
     "dependencies": {

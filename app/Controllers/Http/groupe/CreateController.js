@@ -38,7 +38,6 @@ class CreateController {
                 end_date: inputs.endDate,
             })
 
-            await groupe.save()
             return response.status(200).send({
                 message: 'successful',
             })

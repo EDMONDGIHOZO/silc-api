@@ -47,6 +47,17 @@ Route.group(() => {
     Route.post('groupes', 'groupe/CreateController.store')
     Route.get('groupes', 'groupe/ViewController.index')
     Route.get('groupes/:id', 'groupe/ViewController.show')
-    Route.put('groupes/:id', 'groupe/UpdateController.update')
+    Route.put('groupes/:id', 'groupe/MainController.update')
     Route.delete('groupes/:id', 'groupe/MainController.destroy')
+})
+
+/** general data collection */
+
+Route.group(() => {
+    Route.resource('collections', 'collection/GeneralController')
+})
+
+/** financial data collection  */
+Route.group(() => {
+    Route.resource('financials', 'collection/FinancialController')
 })
