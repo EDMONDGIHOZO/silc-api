@@ -1,21 +1,29 @@
-'use strict'
+"use strict";
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use('Schema')
+const Schema = use("Schema");
 
 class EpargneSchema extends Schema {
-    up() {
-        this.create('epargnes', (table) => {
-            table.increments()
-            table.integer('collection_id').unsigned().notNullable().unique()
-            table.integer('amount')
-            table.timestamps()
-        })
-    }
+  up() {
 
-    down() {
-        this.drop('epargnes')
-    }
+    this.create("epargnes", (table) => {
+      table.increments();
+      table
+        .integer("collection_id")
+        .unsigned()
+        .references("id")
+        .inTable("general_records")
+        .notNullable()
+        .unique();
+
+      table.foreign("collection_id").onDelete("CASCADE");
+      table.integer("valeur_total_epargne_realise_mois").defaultTo(0);
+    });
+  }
+
+  down() {
+    this.drop("epargnes");
+  }
 }
 
-module.exports = EpargneSchema
+module.exports = EpargneSchema;

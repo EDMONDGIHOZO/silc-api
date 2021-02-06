@@ -17,13 +17,15 @@ class CreateController {
             'monthlyInterest',
             'startDate',
             'endDate',
+            'minimumMonthlyAmountEpargne',
+            "maximumMonthlyAmountEpargne"
         ])
 
         try {
             /** generate unique code for group */
             const code = crypto({ length: 4, type: 'distinguishable' })
                 /** combine group name with code given */
-            const groupCode = inputs.name + "-" + code
+            const groupCode = code
                 /** save group data to db */
             const groupe = await Groupe.create({
                 name: inputs.name,
@@ -36,10 +38,14 @@ class CreateController {
                 monthly_interest: inputs.monthlyInterest,
                 start_date: inputs.startDate,
                 end_date: inputs.endDate,
+                montant_minimum_epargne_chaque_mois: inputs.minimumMonthlyAmountEpargne,
+                montant_maximal_epargne_chaque_mois: inputs.maximumMonthlyAmountEpargne
             })
 
             return response.status(200).send({
-                message: 'successful',
+                status: 'success',
+                message: 'well saved',
+                data: groupe.group_code
             })
         } catch (error) {
             return response.status(404).send({

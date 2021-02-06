@@ -1,60 +1,65 @@
-'use strict'
+"use strict";
 
-const Groupe = use('App/Models/Groupe')
-const crypto = require('crypto-random-string')
+const Groupe = use("App/Models/Groupe");
+const crypto = require("crypto-random-string");
 
 class MainController {
-    /** ================= update informations for groupe ------------------- */
-    async update({ request, params, response }) {
-        /** get user inputs */
-        let inputs = request.only(['name', 'maxCredit', 'monthlyInterest'])
-        const groupe_id = params.id
-            /** generate unique code for group */
-        const code = crypto({ length: 4, type: 'distinguishable' })
-            /** combine group name with code given */
-        const groupCode = inputs.name + '-' + code
+  /** ================= update informations for groupe ------------------- */
+  async update({ request, params, response }) {
+    /** get user inputs */
+    let inputs = request.only([
+      "name",
+      "maxCredit",
+      "monthlyInterest",
+      "endDate",
+      "dioceseId",
+      "paroisseId",
+    ]);
+    const groupe_id = params.id;
+    /** generate unique code for group */
+    const code = crypto({ length: 4, type: "distinguishable" });
+    /** combine group name with code given */
+    const groupCode = code;
 
-        /** find the target groupe */
-        const groupe = await Groupe.query().where('id', groupe_id).first()
+    /** find the target groupe */
+    const groupe = await Groupe.query().where("id", groupe_id).first();
 
-        /** update groupe informations */
-        if (groupe) {
-            groupe.name = inputs.name
-            groupe.credit_group_max_time = inputs.maxCredit
-            groupe.monthly_interest = inputs.monthlyInterest
-            groupe.group_code = groupCode
+    /** update groupe informations */
+    if (groupe) {
+      groupe.name = inputs.name;
+      groupe.credit_group_max_time = inputs.maxCredit;
+      groupe.monthly_interest = inputs.monthlyInterest;
+      groupe.end_date = inputs.endDate;
+      groupe.paroisse_id = inputs.paroisseId;
+      await groupe.save();
 
-            await groupe.save()
-
-            return response.status(200).send({
-                message: 'updated',
-            })
-        } else {
-            return response.status(404).send({
-                message: 'group not found',
-            })
-        }
+      return response.status(200).send({
+        message: "updated",
+      });
+    } else {
+      return response.status(404).send({
+        message: "group not found",
+      });
     }
+  }
 
-    /** ================= delete informations for groupe ------------------- */
+  /** ================= delete informations for groupe ------------------- */
 
-    async destroy({ params, response }) {
+  async destroy({ params, response }) {
+    const groupe = await Groupe.query().where("id", params.id).first();
 
-        const groupe = await Groupe.query().where('id', params.id).first()
+    if (groupe) {
+      await groupe.delete();
 
-        if (groupe) {
-            await groupe.delete()
-
-            return response.status(200).send({
-                message: 'deleted group'
-            })
-        } else {
-            return response.status(404).send({
-                message: 'no content'
-            })
-        }
-
+      return response.status(200).send({
+        message: "deleted group",
+      });
+    } else {
+      return response.status(404).send({
+        message: "no content",
+      });
     }
+  }
 }
 
-module.exports = MainController
+module.exports = MainController;

@@ -1,25 +1,25 @@
-'use strict'
+"use strict";
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use('Schema')
+// credit internes
+const Schema = use("Schema");
 
 class CreditSchema extends Schema {
-    up() {
-        this.create('credits', (table) => {
-            table.increments()
-            table.integer('collection_id').unsigned().notNullable()
-            table.integer('credited_girls')
-            table.integer('credited_boys')
-            table.integer('granted_credit')
-            table.integer('granted_capital')
-            table.integer('interest_for_grants')
-            table.timestamps()
-        })
-    }
+  up() {
+    this.create("credits", (table) => {
+      table.increments();
+      table.integer("collection_id").unsigned().notNullable().unique();
+      table.integer("membres_contracte_un_credit_girls").defaultTo(0);
+      table.integer("membres_contracte_un_credit_boys").defaultTo(0);
+      table.integer("nombres_total_credit_actroyes").defaultTo(0);
+      table.integer("valeur_de_credit_actroyes_capital").defaultTo(0);
+      table.integer("valeur_des_interets_sur_credit_actroyes").defaultTo(0)
+    });
+  }
 
-    down() {
-        this.drop('credits')
-    }
+  down() {
+    this.drop("credits");
+  }
 }
 
-module.exports = CreditSchema
+module.exports = CreditSchema;

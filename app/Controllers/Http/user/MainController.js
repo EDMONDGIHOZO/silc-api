@@ -38,6 +38,22 @@ class MainController {
         })
     }
 
+    /*** get the current user information */
+    async profile({ auth, response }) {
+        const currentUser = await auth.getUser()
+        if (currentUser) {
+            const user = await User.query().where('id', currentUser.id).with('role').first()
+            return response.status(200).send({
+                message: 'success',
+                data: user,
+            })
+        } else {
+            return response.status(404).send({
+                message: 'notFound',
+            })
+        }
+    }
+
     /*** ============= update single user data ================================ */
 
     async update({ request, params, response }) {
