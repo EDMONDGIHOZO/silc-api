@@ -81,6 +81,10 @@ Route.group(() => {
   Route.resource("epargnes", "collection/EpargneController");
 });
 
+Route.group(() => {
+  Route.resource("soldes", "hr/SoldeController");
+});
+
 // special Viewgroup
 Route.get("sgroup/:id", "dashboard/GroupViewController.show");
 

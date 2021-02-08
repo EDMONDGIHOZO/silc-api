@@ -16,6 +16,10 @@ class GeneralRecord extends Model {
     return this.belongsTo("App/Models/Groupe", "group_id", "id");
   }
 
+  solde() {
+    return this.hasOne("App/Models/Solde", "id", "collection_id");
+  }
+
   rebursed() {
     return this.hasOne("App/Models/Rebursement", "id", "collection_id");
   }

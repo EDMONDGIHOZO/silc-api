@@ -8,10 +8,6 @@ class GroupViewController {
       .with("diocese")
       .with("paroisse")
       .with("collections", (builder) => {
-        builder.with("epargne");
-        builder.with("credit");
-        builder.with("relation");
-        builder.with("rebursed");
         builder.orderBy("created_at", "asc");
       })
       .first();

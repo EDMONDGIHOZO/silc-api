@@ -1,29 +1,8 @@
-# Adonis API application
-
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
-
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
-
-## Setup
-
-Use the adonis command to install the blueprint
-
-```bash
-adonis new yardstick --api-only
-```
-
-or manually clone the repo and then run `npm install`.
+# SILCGROUP - BACKEND
 
 
-### Migrations
+silcgroup application , is made to be used in data collection and management of groups of youth in different catholic areas in Rwanda,
+those groups help young boys and girls in villages to save money together, and do common projects that can help them to rise their economy.
 
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
 ```
 # silc-api

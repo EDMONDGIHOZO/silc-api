@@ -33,7 +33,9 @@ class Collection extends Model {
     return this.hasOne("App/Models/Credit", "id", "collection_id");
   }
 
-
+  solde() {
+    return this.hasOne("App/Models/Solde", "id", "collection_id");
+  }
 
   static get dates() {
     return super.dates.concat(["created_at", "updated_at"]);
@@ -43,10 +45,9 @@ class Collection extends Model {
     if (field === "created_at") {
       return moment(value).format("MM");
     } else if (field === "updated_at") {
-          return moment(value).format("yyyy-MM-DD");
+      return moment(value).format("yyyy-MM-DD");
     }
   }
-
 }
 
 module.exports = Collection;

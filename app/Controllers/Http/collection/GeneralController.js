@@ -31,6 +31,8 @@ class GeneralController {
       .with("credit")
       .with("rebursed")
       .with("relation")
+      .with("solde")
+      .with("groups")
       .first();
 
     if (collection) {
