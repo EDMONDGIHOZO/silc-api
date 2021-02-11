@@ -33,6 +33,8 @@ class GeneralController {
       .with("relation")
       .with("solde")
       .with("groups")
+      .with("entraide")
+      .with("penalites")
       .first();
 
     if (collection) {

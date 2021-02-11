@@ -20,6 +20,14 @@ class GeneralRecord extends Model {
     return this.hasOne("App/Models/Solde", "id", "collection_id");
   }
 
+  entraide() {
+    return this.hasOne("App/Models/entraide", "id", "collection_id");
+  }
+
+  penalites() {
+    return this.hasOne("App/Models/Penalite", "id", "collection_id");
+  }
+
   rebursed() {
     return this.hasOne("App/Models/Rebursement", "id", "collection_id");
   }
