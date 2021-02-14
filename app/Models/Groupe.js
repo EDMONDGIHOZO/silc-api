@@ -14,7 +14,7 @@ class Groupe extends Model {
   }
 
   paroisse() {
-    return this.belongsTo("App/Models/paroisse", "paroisse_id", "id");
+    return this.belongsTo("App/Models/Paroisse", "paroisse_id", "id");
   }
 
   static get createdAtColumn() {
