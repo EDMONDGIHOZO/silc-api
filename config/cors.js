@@ -16,9 +16,11 @@ module.exports = {
     | Function - Receives the current origin and should return one of the above values.
     |
     */
-    origin: function(currentOrigin) {
-        return currentOrigin === "http://localhost:8080", "https://silc.vercel.app";
-    },
+    // origin: function(currentOrigin) {
+    //     return currentOrigin === "http://localhost:8080", "https://silc.vercel.app";
+    // },
+
+    origin: ['https://silc.vercel.app'],
 
     /*
     |--------------------------------------------------------------------------
