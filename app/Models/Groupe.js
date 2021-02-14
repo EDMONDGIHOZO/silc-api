@@ -10,7 +10,7 @@ class Groupe extends Model {
   }
 
   diocese() {
-    return this.belongsTo("App/Models/diocese", "diocese_id", "id");
+    return this.belongsTo("App/Models/Diocese", "diocese_id", "id");
   }
 
   paroisse() {
