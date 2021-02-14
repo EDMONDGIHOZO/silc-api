@@ -17,7 +17,7 @@ module.exports = {
     |
     */
     origin: function(currentOrigin) {
-        return currentOrigin === "http://localhost:8080", "https://silcgroup.vercel.app";
+        return currentOrigin === "http://localhost:8080", "https://silc.vercel.app";
     },
 
     /*
