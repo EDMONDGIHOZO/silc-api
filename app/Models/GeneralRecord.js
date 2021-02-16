@@ -21,7 +21,7 @@ class GeneralRecord extends Model {
   }
 
   entraide() {
-    return this.hasOne("App/Models/entraide", "id", "collection_id");
+    return this.hasOne("App/Models/Entraide", "id", "collection_id");
   }
 
   penalites() {
