@@ -57,36 +57,22 @@ class GeneralController {
     let {
       collectionDate,
       groupId,
-      debutEpargne,
-      finEpargneCycle,
-      maximalTimeCredit,
-      registeredPreviousMonthGirls,
-      registeredPreviousMonthBoys,
-      abandonCurrentMonthGirls,
-      abandonCurrentMonthBoys,
-      newMembersGirls,
-      newMembersBoys,
-      currentRegisteredGirls,
-      currentRegisteredBoys,
-      presentBoys,
-      presentGirls,
+      newBoys,
+      newGirls,
+      abandonedGirls,
+      abandonedBoys,
+      attendedBoys,
+      attendedGirls,
       collectorName,
     } = request.only([
       "collectionDate",
       "groupId",
-      "debutEpargne",
-      "finEpargneCycle",
-      "maximalTimeCredit",
-      "registeredPreviousMonthBoys",
-      "registeredPreviousMonthGirls",
-      "abandonCurrentMonthBoys",
-      "abandonCurrentMonthGirls",
-      "newMembersBoys",
-      "newMembersGirls",
-      "currentRegisteredBoys",
-      "currentRegisteredGirls",
-      "presentGirls",
-      "presentBoys",
+      "newBoys",
+      "newGirls",
+      "abandonedGirls",
+      "abandonedBoys",
+      "attendedBoys",
+      "attendedGirls",
       "collectorName",
     ]);
 
@@ -107,20 +93,12 @@ class GeneralController {
         group_id: groupId,
         collector_name: collectorName,
         latest: true,
-        date_debut_epargne_cycle: debutEpargne,
-        date_probable_fin_epargne_cycle: finEpargneCycle,
-        dure_maximale_convenue_credit: maximalTimeCredit,
-        inscrit_mois_precedent_gils: registeredPreviousMonthGirls,
-        inscrit_mois_precedent_boys: registeredPreviousMonthBoys,
-        abandons_mois_actuel_gils: abandonCurrentMonthGirls,
-        abandons_mois_actuel_boys: abandonCurrentMonthBoys,
-        nuveaux_membres_mois_girls: newMembersGirls,
-        nuveaux_membres_mois_boys: newMembersBoys,
-        membres_actuel_inscrits_girls: currentRegisteredGirls,
-        membres_actuel_inscrits_boys: currentRegisteredBoys,
-        membres_present_en_reunion_girls: presentGirls,
-        membres_present_en_reunion_boys: presentBoys,
-
+        new_girls: newGirls,
+        new_boys: newBoys,
+        atttended_girls: attendedGirls,
+        attended_boys: attendedBoys,
+        abandoned_boys: abandonedBoys,
+        abandoned_girls: abandonedGirls,
       });
 
       return response.status(200).send({
@@ -139,24 +117,16 @@ class GeneralController {
   /** =============== Update  collection Details ================================= */
   async update({ request, params, response }) {
     /** get inputs */
-    let {
-      collectionDate,
-      collectorName,
-      newMembers,
-      abandons,
-      registeredMembers,
-      boysAttended,
-      girlsAttended,
-    } = request.only([
+    let inputs = request.only([
       "collectionDate",
-      "abandons",
-      "registeredMembers",
-      "boysAttended",
-      "girlsAttended",
-      "collectorName",
-      "newMembers",
+      "verified",
+      "newGirls",
+      "newBoys",
+      "attendedBoys",
+      "attendedGirls",
+      "abandonedGirls",
+      "abandonedBoys",
     ]);
-
     /** get targeted collection */
 
     const collection = await General.query().where("id", params.id).first();
@@ -164,14 +134,13 @@ class GeneralController {
     if (collection) {
       try {
         /** update the collection  */
-        collection.collection_date = collectionDate;
-        collection.collector_name = collectorName;
-        collection.new_members = newMembers;
-        collection.abandons = abandons;
-        collection.registered_members = registeredMembers;
-        collection.boys_attended = boysAttended;
-        collection.girls_attended = girlsAttended;
-
+        collection.collection_date = inputs.collectionDate;
+        collection.new_boys = inputs.newBoys;
+        collection.new_girls = inputs.newGirls;
+        collection.attended_boys = inputs.attendedBoys;
+        collection.attended_girls = inputs.attendedGirls;
+        collection.abandoned_boys = inputs.abandonedBoys;
+        collection.abandoned_girls = inputs.abandonedGirls;
         /** save the updates */
         await collection.save();
 
