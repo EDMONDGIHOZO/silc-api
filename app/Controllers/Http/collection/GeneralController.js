@@ -59,11 +59,15 @@ class GeneralController {
       groupId,
       newBoys,
       newGirls,
+      prevRegisteredBoys,
+      prevRegisteredGirls,
       abandonedGirls,
       abandonedBoys,
       attendedBoys,
       attendedGirls,
       collectorName,
+      actualBoys,
+      actualGirls,
     } = request.only([
       "collectionDate",
       "groupId",
@@ -74,6 +78,8 @@ class GeneralController {
       "attendedBoys",
       "attendedGirls",
       "collectorName",
+      "actualBoys",
+      "actualGirls",
     ]);
 
     // outdate the latest collection
@@ -99,6 +105,10 @@ class GeneralController {
         attended_boys: attendedBoys,
         abandoned_boys: abandonedBoys,
         abandoned_girls: abandonedGirls,
+        prev_registered_boys: prevRegisteredBoys,
+        prev_registered_girls: prevRegisteredGirls,
+        actual_girls: actualGirls,
+        actual_boys: actualBoys,
       });
 
       return response.status(200).send({
@@ -126,6 +136,10 @@ class GeneralController {
       "attendedGirls",
       "abandonedGirls",
       "abandonedBoys",
+      "prevRegisteredGirls",
+      "prevRegisteredBoys",
+      "actualBoys",
+      "actualGirls",
     ]);
     /** get targeted collection */
 
@@ -141,6 +155,10 @@ class GeneralController {
         collection.attended_girls = inputs.attendedGirls;
         collection.abandoned_boys = inputs.abandonedBoys;
         collection.abandoned_girls = inputs.abandonedGirls;
+        collection.prev_registered_boys = inputs.prevRegisteredBoys;
+        collection.prev_registered_girls = inputs.prevRegisteredGirls;
+        collection.actual_boys = inputs.actualBoys;
+        collection.actual_girls = inputs.actualGirls;
         /** save the updates */
         await collection.save();
 
