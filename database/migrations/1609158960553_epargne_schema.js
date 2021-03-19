@@ -5,7 +5,6 @@ const Schema = use("Schema");
 
 class EpargneSchema extends Schema {
   up() {
-
     this.create("epargnes", (table) => {
       table.increments();
       table
@@ -15,9 +14,11 @@ class EpargneSchema extends Schema {
         .inTable("general_records")
         .notNullable()
         .unique();
-
       table.foreign("collection_id").onDelete("CASCADE");
-      table.integer("valeur_total_epargne_realise_mois").defaultTo(0);
+      table.integer("period_released_amount").defaultTo(0);
+      table.integer("monthly_min_amount").defaultTo(0);
+      table.integer("monthly_max_amount").defaultTo(0);
+      table.integer("epargne_per_member").defaultTo(0);
     });
   }
 

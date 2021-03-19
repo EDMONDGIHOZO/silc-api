@@ -5,39 +5,46 @@ const Epargne = use("App/Models/Epargne");
 class EpargneController {
   /***  =========================  add epargne value  ====================================  */
   async store({ request, response }) {
-    let { collectionId, amount } = request.only(["collectionId", "amount"]);
+    // get the data
+    let inputs = request.only([
+      "collectionId",
+      "monthlyMinAmount",
+      "periodReleasedAmount",
+      "monthlyMaxAmount",
+      "epargnePerMember",
+    ]);
 
-    // check if the collection id already exist in database
-    const collection = await Epargne.query()
-      .where("collection_id", collectionId)
+    // check if there is existing with same collection
+    const epargne = await Epargne.query()
+      .where("collection_id", inputs.collectionId)
       .first();
 
-    if (collection) {
-      // update the amount in collection
-      collection.merge({ valeur_total_epargne_realise_mois: amount });
-      await collection.save();
-
-      return response.status(200).send ({
-        status: 'success',
-        message: 'updated the amount'
-      })
-    }
-
     try {
-      const epargne = await Epargne.create({
-        collection_id: collectionId,
-        valeur_total_epargne_realise_mois: amount,
-      });
-
-      return response.status(200).send({
-        status: 'success',
-        message: 'epargne saved successfully!'
-      });
+      if (epargne) {
+        // update the epargne information
+        epargne.merge({
+          period_released_amount: inputs.periodReleasedAmount,
+          monthly_min_amount: inputs.monthlyMinAmount,
+          monthly_max_amount: inputs.monthlyMaxAmount,
+          epargne_per_member: inputs.epargnePerMember,
+        });
+        // save the updates
+        await epargne.save();
+        return response.status(200).send("saved");
+      } else {
+        // create the new
+        const newEpargne = new Epargne();
+        newEpargne.collection_id = inputs.collectionId;
+        newEpargne.period_released_amount = inputs.periodReleasedAmount;
+        newEpargne.monthly_min_amount = inputs.monthlyMinAmount;
+        newEpargne.monthly_max_amount = inputs.monthlyMaxAmount;
+        newEpargne.epargne_per_member = inputs.epargnePerMember;
+        // save new epargne
+        await newEpargne.save();
+        return response.status(200).send("saved");
+      }
     } catch (error) {
-      return response.status(200).send({
-        message: "something is wrong",
-        error: error,
-      });
+      return response.status(200).send("someting weird happened");
     }
   }
 }

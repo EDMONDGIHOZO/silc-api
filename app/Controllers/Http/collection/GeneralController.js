@@ -91,16 +91,15 @@ class GeneralController {
       .first();
 
     if (old) {
-      old.merge({ latest: false });
-      await old.save();
-    }
-
-    try {
+      // degrade
+      old.merge({ latest: 0 });
+      await old.save()
+      // create the new one
       const collection = await General.create({
         collection_date: collectionDate,
         group_id: groupId,
         collector_name: collectorName,
-        latest: true,
+        latest: 1,
         verified: false,
         new_girls: newGirls,
         new_boys: newBoys,
@@ -118,11 +117,6 @@ class GeneralController {
         status: "success",
         message: "saved",
         data: collection,
-      });
-    } catch (error) {
-      return response.status(501).send({
-        message: "not saved",
-        error: error,
       });
     }
   }
@@ -163,7 +157,7 @@ class GeneralController {
         collection.prev_registered_girls = inputs.prevRegisteredGirls;
         collection.actual_boys = inputs.actualBoys;
         collection.actual_girls = inputs.actualGirls;
-        collection.verified = inputs.verified
+        collection.verified = inputs.verified;
         /** save the updates */
         await collection.save();
 

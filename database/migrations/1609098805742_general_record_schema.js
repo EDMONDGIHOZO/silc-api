@@ -9,7 +9,7 @@ class GeneralRecordSchema extends Schema {
       table.increments();
       table.date("collection_date").notNullable();
       table.string("collector_name");
-      table.boolean("latest").defaultTo(false).unique();
+      table.boolean("latest").defaultTo(false).notNullable();
       table.boolean("verified").defaultTo(false);
       table.integer("new_boys").defaultTo(0);
       table.integer("new_girls").defaultTo(0);
