@@ -73,6 +73,8 @@ class GeneralController {
       "groupId",
       "newBoys",
       "newGirls",
+      "prevRegisteredBoys",
+      "prevRegisteredGirls",
       "abandonedGirls",
       "abandonedBoys",
       "attendedBoys",
@@ -99,9 +101,10 @@ class GeneralController {
         group_id: groupId,
         collector_name: collectorName,
         latest: true,
+        verified: false,
         new_girls: newGirls,
         new_boys: newBoys,
-        atttended_girls: attendedGirls,
+        attended_girls: attendedGirls,
         attended_boys: attendedBoys,
         abandoned_boys: abandonedBoys,
         abandoned_girls: abandonedGirls,
@@ -140,6 +143,7 @@ class GeneralController {
       "prevRegisteredBoys",
       "actualBoys",
       "actualGirls",
+      "verified",
     ]);
     /** get targeted collection */
 
@@ -159,6 +163,7 @@ class GeneralController {
         collection.prev_registered_girls = inputs.prevRegisteredGirls;
         collection.actual_boys = inputs.actualBoys;
         collection.actual_girls = inputs.actualGirls;
+        collection.verified = inputs.verified
         /** save the updates */
         await collection.save();
 

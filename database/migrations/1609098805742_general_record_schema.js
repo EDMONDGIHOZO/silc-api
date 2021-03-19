@@ -19,6 +19,8 @@ class GeneralRecordSchema extends Schema {
       table.integer("actual_boys").defaultTo(0);
       table.integer("prev_registered_girls").defaultTo(0);
       table.integer("prev_registered_boys").defaultTo(0);
+      table.integer("abandoned_boys").defaultTo(0);
+      table.integer("abandoned_girls").defaultTo(0);
       table.timestamps();
     });
   }
