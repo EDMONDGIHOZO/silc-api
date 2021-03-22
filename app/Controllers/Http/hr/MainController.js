@@ -2,72 +2,58 @@
 
 const Database = use("Database");
 
+const Entraide = use("App/Models/Entraide");
+const Penalite = use("App/Models/Penalite");
+
 class MainController {
   async penCreate({ request, response }) {
     // gather the inputs
-    let { collectionId, punishedMembers, amountPaid } = request.only([
-      "collectionId",
-      "punishedMembers",
-      "amountPaid",
-    ]);
-    // finding the exsting
-    const pen = await Database.from("penalites")
-      .where("collection_id", collectionId)
-      .delete();
-    // check if they are valid
+    let form = request.only(["collectionId", "punishedMembers", "amountPaid"]);
+
+    await Penalite.query().where("collection_id", form.collectionId).delete();
+
     try {
-      const penalite = await Database.table("penalites").insert({
-        collection_id: collectionId,
-        Membres_punis: punishedMembers,
-        Montant_des_penalites_payees: amountPaid,
-      });
+      const newPen = new Penalite();
+      newPen.collection_id = form.collectionId;
+      newPen.Membres_punis = form.punishedMembers;
+      newPen.Montant_des_penalites_payees = form.amountPaid;
+
+      await newPen.save();
 
       return response.status(200).send({
-        status: "success",
-        message: "bien enregistres",
-        data: penalite,
+        message: "saved for first time",
+        color: "success",
+        data: newPen,
       });
-    } catch (e) {
-      return response.status(404).send({
-        status: "error",
-        message: "pas enregistres",
-        error: e.code,
+    } catch (error) {
+      return response.send({
+        message: "the hell appeared",
+        color: "error",
+        error,
       });
     }
   }
 
   async enCreate({ request, response }) {
     // gather the inputs
-    let { collectionId, income, outgoing, soutenus } = request.only([
-      "collectionId",
-      "income",
-      "outgoing",
-      "soutenus",
-    ]);
-    // finding the exsting
-    const pen = await Database.from("entraides")
-      .where("collection_id", collectionId)
-      .delete();
-    // check if they are valid
-    try {
-      const penalite = await Database.table("entraides").insert({
-        collection_id: collectionId,
-        valeur_entrees: income,
-        valeur_sorties: outgoing,
-        membres_soutenus: soutenus,
-      });
+    let form = request.only(["collectionId", "income", "outgoing", "soutenus"]);
 
+    await Entraide.query().where("collection_id", form.collectionId).delete();
+
+    try {
+      const newEnt = new Entraide();
+      newEnt.collection_id = form.collectionId;
+      newEnt.valeur_entrees = form.income;
+      newEnt.valeur_sorties = form.outgoing;
+      newEnt.membres_soutenus = form.soutenus;
+      await newEnt.save();
       return response.status(200).send({
-        status: "success",
-        message: "bien enregistres",
-        data: penalite,
+        message: "saved for first time",
+        color: "success",
+        data: newEnt,
       });
-    } catch (e) {
-      return response.status(404).send({
-        status: "error",
-        message: "pas enregistres",
-        error: e.code,
-      });
+    } catch (error) {
+      return response.send({ message: "error occured", color: "error", error });
     }
   }
 

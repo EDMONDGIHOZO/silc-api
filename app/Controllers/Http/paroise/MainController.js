@@ -30,10 +30,8 @@ class MainController {
       .withCount("groups")
       .with("groups")
       .with("collections", (builder) => {
-        builder.where("latest", true);
-        builder.with("credit");
         builder.with("epargne");
-        builder.with("relation");
+        builder.with("credit");
       })
       .first();
     if (paroi) {

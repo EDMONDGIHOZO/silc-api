@@ -6,7 +6,7 @@ class EpargneController {
   /***  =========================  add epargne value  ====================================  */
   async store({ request, response }) {
     // get the data
-    let inputs = request.only([
+    let form = request.only([
       "collectionId",
       "monthlyMinAmount",
       "periodReleasedAmount",
@@ -14,37 +14,24 @@ class EpargneController {
       "epargnePerMember",
     ]);
 
-    // check if there is existing with same collection
-    const epargne = await Epargne.query()
-      .where("collection_id", inputs.collectionId)
-      .first();
+    await Epargne.query().where("collection_id", form.collectionId).delete();
 
     try {
-      if (epargne) {
-        // update the epargne information
-        epargne.merge({
-          period_released_amount: inputs.periodReleasedAmount,
-          monthly_min_amount: inputs.monthlyMinAmount,
-          monthly_max_amount: inputs.monthlyMaxAmount,
-          epargne_per_member: inputs.epargnePerMember,
-        });
-        // save the updates
-        await epargne.save();
-        return response.status(200).send("saved");
-      } else {
-        // create the new
-        const newEpargne = new Epargne();
-        newEpargne.collection_id = inputs.collectionId;
-        newEpargne.period_released_amount = inputs.periodReleasedAmount;
-        newEpargne.monthly_min_amount = inputs.monthlyMinAmount;
-        newEpargne.monthly_max_amount = inputs.monthlyMaxAmount;
-        newEpargne.epargne_per_member = inputs.epargnePerMember;
-        // save new epargne
-        await newEpargne.save();
-        return response.status(200).send("saved");
-      }
+      const newEpargne = new Epargne();
+      newEpargne.collection_id = form.collectionId;
+      newEpargne.period_released_amount = form.periodReleasedAmount;
+      newEpargne.monthly_min_amount = form.monthlyMinAmount;
+      newEpargne.monthly_max_amount = form.monthlyMaxAmount;
+      newEpargne.epargne_per_member = form.epargnePerMember;
+      await newEpargne.save();
+
+      return response.send({
+        message: "saved epargne successfully",
+        color: "success",
+        data: newEpargne,
+      });
     } catch (error) {
-      return response.status(200).send("someting weird happened");
+      return response.send({ message: "error occured", color: "error", error });
     }
   }
 }

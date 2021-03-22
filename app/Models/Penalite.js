@@ -9,6 +9,14 @@ class Penalite extends Model {
     return "penalites"
   }
 
+  static get updatedAtColumn() {
+    return null;
+  }
+
+  static get createdAtColumn() {
+    return null;
+  }
+
 }
 
 

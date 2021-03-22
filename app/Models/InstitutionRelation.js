@@ -15,13 +15,6 @@ class InstitutionRelation extends Model {
     static get createdAtColumn() {
         return null
     }
-
-    /**
-     * Hide/Omit Fields From JSON Output
-     */
-    static get hidden() {
-        return ['collection_id']
-    }
 }
 
 module.exports = InstitutionRelation

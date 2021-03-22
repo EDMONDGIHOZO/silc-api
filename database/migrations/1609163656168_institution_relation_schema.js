@@ -9,8 +9,8 @@ class InstitutionRelationSchema extends Schema {
       table.integer("collection_id").notNullable().unique();
       table.integer("membres_ouvert_compte_bancaire").defaultTo(0);
       table.integer("membres_contracte_credit_bancaire").defaultTo(0);
-      table.boolean("ouvert_compte_bancaire").defaultTo(false);
-      table.boolean("groupe_ayant_contracte_credit_bancaire").defaultTo(false);
+      table.integer("groupe_ouvert_compte_bancaire").defaultTo(0);
+      table.integer("groupe_ayant_contracte_credit_bancaire").defaultTo(0);
       table.integer("montant_de_credit_bancaire_contracte").defaultTo(0);
     });
   }

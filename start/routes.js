@@ -68,7 +68,7 @@ Route.group(() => {
   Route.get("groupes/:id", "groupe/ViewController.show");
   Route.put("groupes/:id", "groupe/MainController.update");
   Route.delete("groupes/:id", "groupe/MainController.destroy");
-}).middleware(["auth"]);
+});
 
 /** general data collection */
 
@@ -93,10 +93,6 @@ Route.group(() => {
   Route.resource("credits", "collection/CreditController");
 });
 
-/** Rebursement data collection  */
-Route.group(() => {
-  Route.resource("rebursements", "collection/RebursedController");
-});
 
 /** institution relation data collection  */
 Route.group(() => {

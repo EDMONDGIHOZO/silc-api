@@ -28,9 +28,6 @@ class GeneralRecord extends Model {
     return this.hasOne("App/Models/Penalite", "id", "collection_id");
   }
 
-  rebursed() {
-    return this.hasOne("App/Models/Rebursement", "id", "collection_id");
-  }
   relation() {
     return this.hasOne("App/Models/InstitutionRelation", "id", "collection_id");
   }

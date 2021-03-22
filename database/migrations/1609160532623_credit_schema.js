@@ -8,12 +8,22 @@ class CreditSchema extends Schema {
   up() {
     this.create("credits", (table) => {
       table.increments();
-      table.integer("collection_id").unsigned().notNullable().unique();
-      table.integer("membres_contracte_un_credit_girls").defaultTo(0);
-      table.integer("membres_contracte_un_credit_boys").defaultTo(0);
-      table.integer("nombres_total_credit_actroyes").defaultTo(0);
-      table.integer("valeur_de_credit_actroyes_capital").defaultTo(0);
-      table.integer("valeur_des_interets_sur_credit_actroyes").defaultTo(0)
+      table.integer("collection_id").unsigned().notNullable();
+      table.integer("credite_girls").defaultTo(0);
+      table.integer("credite_boys").defaultTo(0);
+      table.integer("granted_credit").defaultTo(0);
+      table.integer("granted_capital ").defaultTo(0);
+      table.integer("interest_for_grants").defaultTo(0);
+      table.integer("moyenne_amount_credit").defaultTo(0);
+      table.integer("capital_interest").defaultTo(0);
+      table.integer("rebursed_value_capital").defaultTo(0);
+      table.integer("rebursed_interest_value").defaultTo(0);
+      table.integer("rebursed_capital_interest").defaultTo(0);
+      table.integer("remaining_credit_capital").defaultTo(0);
+      table.integer("interest_remaining_credit").defaultTo(0);
+      table.integer("credit_capital_interest_remaining").defaultTo(0);
+      table.integer("capital_credit_remaining").defaultTo(0);
+      table.integer("risky").defaultTo(0);
     });
   }
 

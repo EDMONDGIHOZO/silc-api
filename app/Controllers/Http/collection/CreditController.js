@@ -5,61 +5,51 @@ const Credit = use("App/Models/Credit");
 class CreditController {
   /***  =========================  add credit value  ====================================  */
   async store({ request, response }) {
-    let {
-      collectionId,
-      creditedGirls,
-      creditedBoys,
-      grantedCredit,
-      grantedCapital,
-      interestForGrants,
-    } = request.only([
+    let form = request.only([
       "collectionId",
       "creditedGirls",
       "creditedBoys",
       "grantedCredit",
       "grantedCapital",
       "interestForGrants",
+      "moyenneAmountCredit",
+      "rebursedValueCapital",
+      "rebursedInterestValue",
+      "rebursedCapitalInterest",
+      "remainingCreditCapitalValue",
+      "interestRemainingCredit",
+      "creditCapitalInterestRemaining",
+      "capitalCreditRemaining",
+      "risky",
     ]);
 
-    // check if the credit exist
-    const collection = await Credit.query()
-      .where("collection_id", collectionId)
-      .first();
-
-    if (collection) {
-      collection.merge({
-        membres_contracte_un_credit_girls: creditedGirls,
-        membres_contracte_un_credit_boys: creditedBoys,
-        nombres_total_credit_actroyes: grantedCredit,
-        valeur_de_credit_actroyes_capital: grantedCapital,
-        valeur_des_interets_sur_credit_actroyes: interestForGrants,
-      });
-      await collection.save();
-      return response.status(200).send({
-        status: "success",
-        message: "updated the credits",
-      });
-    }
-
+    await Credit.query().where("collection_id", form.collectionId).delete();
+    
     try {
-      const credit = await Credit.create({
-        collection_id: collectionId,
-        membres_contracte_un_credit_girls: creditedGirls,
-        membres_contracte_un_credit_boys: creditedBoys,
-        nombres_total_credit_actroyes: grantedCredit,
-        valeur_de_credit_actroyes_capital: grantedCapital,
-        valeur_des_interets_sur_credit_actroyes: interestForGrants,
-      });
+      const newCredit = new Credit();
+      newCredit.collection_id = form.collectionId;
+      newCredit.credite_girls = form.creditedGirls;
+      newCredit.credite_boys = form.creditedBoys;
+      newCredit.granted_credit = form.grantedCredit;
+      newCredit.granted_capital = form.grantedCapital;
+      newCredit.interest_for_grants = form.interestForGrants;
+      newCredit.moyenne_amount_credit = form.moyenneAmountCredit;
+      newCredit.capital_interest = form.capitalInterest;
+      newCredit.rebursed_value_capital = form.rebursedValueCapital;
+      newCredit.rebursed_interest_value = form.rebursedInterestValue;
+      newCredit.rebursed_capital_interest = form.rebursedCapitalInterest;
+      newCredit.remaining_credit_capital = form.remainingCreditCapitalValue;
+      newCredit.interest_remaining_credit = form.interestRemainingCredit;
+      newCredit.credit_capital_interest_remaining =
+        form.creditCapitalInterestRemaining;
+      newCredit.capital_credit_remaining = form.capitalCreditRemaining;
+      newCredit.risky = form.risky;
 
-      return response.status(200).send({
-        status: "success",
-        message: "saved the credits",
-      });
+      // save it
+      await newCredit.save();
+      return response.status(200).send({ message: "success", data: newCredit });
     } catch (error) {
-      return response.status(200).send({
-        message: "something is wrong",
-        error: error,
-      });
+      return response.send({ message: "error occured", error: error });
     }
   }
 }

@@ -54,21 +54,7 @@ class GeneralController {
   async store({ request, auth, response }) {
     /** gather the user information */
 
-    let {
-      collectionDate,
-      groupId,
-      newBoys,
-      newGirls,
-      prevRegisteredBoys,
-      prevRegisteredGirls,
-      abandonedGirls,
-      abandonedBoys,
-      attendedBoys,
-      attendedGirls,
-      collectorName,
-      actualBoys,
-      actualGirls,
-    } = request.only([
+    let form = request.only([
       "collectionDate",
       "groupId",
       "newBoys",
@@ -84,39 +70,34 @@ class GeneralController {
       "actualGirls",
     ]);
 
-    // outdate the latest collection
-    const old = await General.query()
-      .where("group_id", groupId)
-      .where("latest", true)
-      .first();
+    try {
+      const newCol = new General();
+      newCol.collection_date = form.collectionDate;
+      newCol.group_id = form.groupId;
+      newCol.collector_name = form.collectorName;
+      newCol.latest = false;
+      newCol.verified = false;
+      newCol.new_boys = form.newBoys;
+      newCol.new_girls = form.newGirls;
+      newCol.prev_registered_girls = form.prevRegisteredGirls;
+      newCol.prev_registered_boys = form.prevRegisteredBoys;
+      newCol.abandoned_boys = form.abandonedBoys;
+      newCol.abandoned_girls = form.abandonedGirls;
+      newCol.attended_boys = form.attendedBoys;
+      newCol.attended_girls = form.attendedGirls;
+      newCol.actual_boys = form.actualBoys;
+      newCol.actual_girls = form.actualGirls;
+      // save
+      await newCol.save();
 
-    if (old) {
-      // degrade
-      old.merge({ latest: 0 });
-      await old.save()
-      // create the new one
-      const collection = await General.create({
-        collection_date: collectionDate,
-        group_id: groupId,
-        collector_name: collectorName,
-        latest: 1,
-        verified: false,
-        new_girls: newGirls,
-        new_boys: newBoys,
-        attended_girls: attendedGirls,
-        attended_boys: attendedBoys,
-        abandoned_boys: abandonedBoys,
-        abandoned_girls: abandonedGirls,
-        prev_registered_boys: prevRegisteredBoys,
-        prev_registered_girls: prevRegisteredGirls,
-        actual_girls: actualGirls,
-        actual_boys: actualBoys,
-      });
-
-      return response.status(200).send({
-        status: "success",
-        message: "saved",
-        data: collection,
+      return response
+        .status(200)
+        .send({ message: "saved", color: "success", data: newCol });
+    } catch (error) {
+      return response.send({
+        message: "failed to save",
+        color: "error",
+        error,
       });
     }
   }
