@@ -12,16 +12,19 @@ class GeneralRecord extends Model {
     return this.hasOne("App/Models/Credit", "id", "collection_id");
   }
 
-  groups() {
+  group() {
     return this.belongsTo("App/Models/Groupe", "group_id", "id");
   }
 
-  solde() {
-    return this.hasOne("App/Models/Solde", "id", "collection_id");
-  }
+  // solde() {
+  //   return this.hasOne("App/Models/Solde", "id", "collection_id");
+  // }
 
   entraide() {
     return this.hasOne("App/Models/Entraide", "id", "collection_id");
+  }
+  caisse() {
+    return this.hasOne("App/Models/Caisse", "id", "collection_id");
   }
 
   penalites() {

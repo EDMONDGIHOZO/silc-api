@@ -29,12 +29,11 @@ class GeneralController {
       .where("id", params.id)
       .with("epargne")
       .with("credit")
-      .with("rebursed")
       .with("relation")
-      .with("solde")
-      .with("groups")
+      .with("group")
       .with("entraide")
       .with("penalites")
+      .with("caisse")
       .first();
 
     if (collection) {
