@@ -19,6 +19,7 @@ class CaisseSchema extends Schema {
       table.integer("autre_sortie").defaultTo(0);
       table.integer("total_sortie").defaultTo(0);
       table.integer("solde_periode").defaultTo(0);
+      table.integer("sortie_solidalite").defaultTo(0);
       table.timestamps();
     });
   }

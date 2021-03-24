@@ -62,6 +62,7 @@ class CaisseController {
       "autreSortie",
       "totalSortie",
       "soldePeriode",
+      "sortieSolidalite"
     ]);
 
     await Caisse.query().where("collection_id", form.collectionId).delete();
@@ -74,13 +75,14 @@ class CaisseController {
       newCaisse.credit_rembourse_capital_interest =
         form.creditRembourseCapitalInterest;
       newCaisse.caisse_solidalite = form.caisseSolidalite;
-      newCaisse.entre_penalite = form.entre_penalite;
+      newCaisse.entre_penalite = form.entrePenalite;
       newCaisse.autre_entre = form.autreEntre;
       newCaisse.total_entre = form.totalEntre;
       newCaisse.sortie_credit_actroye = form.sortieCreditActroye;
       newCaisse.autre_sortie = form.autreSortie;
       newCaisse.total_sortie = form.totalSortie;
       newCaisse.solde_periode = form.soldePeriode;
+      newCaisse.sortie_solidalite = form.sortieSolidalite;
 
       await newCaisse.save();
       return response.send({ message: "saved data", color: "success" });
