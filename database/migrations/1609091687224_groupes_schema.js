@@ -18,6 +18,7 @@ class GroupesSchema extends Schema {
       table.integer("credit_group_max_time");
       table.integer("monthly_interest");
       table.date("start_date");
+      table.date("Date_de_creation");
       table.date("end_date");
     });
   }
