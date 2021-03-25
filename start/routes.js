@@ -49,12 +49,10 @@ Route.put("entraide", "hr/MainController.enUpdate");
 
 /**** Dioceses management */
 Route.group(() => {
-  Route.resource("dioceses", "dioceses/MainController").middleware(["auth"]);
+  Route.resource("dioceses", "dioceses/MainController");
 });
 
-Route.get("/diocesesAll", "dioceses/MainController.indexAll").middleware([
-  "auth",
-]);
+Route.get("/diocesesAll", "dioceses/MainController.indexAll");
 
 /*** Paroisses management */
 Route.group(() => {
@@ -84,7 +82,6 @@ Route.group(() => {
   Route.resource("epargnes", "collection/EpargneController");
 });
 
-
 // special Viewgroup
 Route.get("sgroup/:id", "dashboard/GroupViewController.show");
 
@@ -92,7 +89,6 @@ Route.get("sgroup/:id", "dashboard/GroupViewController.show");
 Route.group(() => {
   Route.resource("credits", "collection/CreditController");
 });
-
 
 /** institution relation data collection  */
 Route.group(() => {
