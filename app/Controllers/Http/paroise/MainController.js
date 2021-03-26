@@ -30,7 +30,9 @@ class MainController {
       .withCount("groups")
       .with("groups")
       .with("collections", (builder) => {
+        builder.where("latest", true);
         builder.with("epargne");
+
         builder.with("credit");
       })
       .first();
