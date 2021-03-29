@@ -109,6 +109,7 @@ class GeneralController {
       "verified",
       "newGirls",
       "newBoys",
+      "groupId",
       "attendedBoys",
       "attendedGirls",
       "abandonedGirls",
@@ -117,9 +118,19 @@ class GeneralController {
       "prevRegisteredBoys",
       "actualBoys",
       "actualGirls",
-      "verified",
+      "latest",
     ]);
+
     /** get targeted collection */
+
+    const oldcol = await General.query()
+      .where("group_id", inputs.groupId)
+      .where("latest", true)
+      .first();
+    if (oldcol) {
+      oldcol.merge({ latest: false });
+      await oldcol.save();
+    }
 
     const collection = await General.query().where("id", params.id).first();
 
@@ -137,7 +148,8 @@ class GeneralController {
         collection.prev_registered_girls = inputs.prevRegisteredGirls;
         collection.actual_boys = inputs.actualBoys;
         collection.actual_girls = inputs.actualGirls;
-        collection.verified = inputs.verified;
+        collection.verified = true;
+        collection.latest = inputs.latest;
         /** save the updates */
         await collection.save();
 

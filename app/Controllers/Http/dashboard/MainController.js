@@ -39,13 +39,11 @@ class MainController {
   async index2({ response }) {
     try {
       const groupes = await Group.query()
+        .distinct(["id"])
         .with("collections", (builder) => {
+          builder.with("caisse");
           builder.where("latest", true);
-          builder.with("credit");
-          builder.with("epargne");
-          builder.orderBy("collection_date", "desc");
         })
-        .distinct("id", "name", "group_code")
         .fetch();
 
       // filter those which are not empty

@@ -1,7 +1,5 @@
 "use strict";
 
-const Database = use("Database");
-
 const Entraide = use("App/Models/Entraide");
 const Penalite = use("App/Models/Penalite");
 

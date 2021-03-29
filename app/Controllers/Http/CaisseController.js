@@ -1,6 +1,7 @@
 "use strict";
 
 const Caisse = use("App/Models/Caisse");
+const Database = use("Database");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -52,6 +53,7 @@ class CaisseController {
     let form = request.only([
       "collectionId",
       "rapportSold",
+      "groupId",
       "epargneEntre",
       "creditRembourseCapitalInterest",
       "caisseSolidalite",
@@ -62,7 +64,7 @@ class CaisseController {
       "autreSortie",
       "totalSortie",
       "soldePeriode",
-      "sortieSolidalite"
+      "sortieSolidalite",
     ]);
 
     await Caisse.query().where("collection_id", form.collectionId).delete();
@@ -83,8 +85,13 @@ class CaisseController {
       newCaisse.total_sortie = form.totalSortie;
       newCaisse.solde_periode = form.soldePeriode;
       newCaisse.sortie_solidalite = form.sortieSolidalite;
-
       await newCaisse.save();
+
+      //save the new collection as latest
+      const newCollection = await Database.table("general_records")
+        .where("id", form.collectionId)
+        .update("latest", true);
+         
       return response.send({ message: "saved data", color: "success" });
     } catch (error) {
       return response.send({ message: "error occured", error });
