@@ -3,6 +3,7 @@
 const Diocese = use("App/Models/Diocese");
 const Paroisse = use("App/Models/Paroisse");
 const Group = use("App/Models/Groupe");
+const Collections = use("App/Models/GeneralRecord");
 
 class MainController {
   // dashboard home page controllers
@@ -37,34 +38,11 @@ class MainController {
   }
 
   async index2({ response }) {
-    try {
-      const groupes = await Group.query()
-        .distinct(["id"])
-        .with("collections", (builder) => {
-          builder.with("caisse");
-          builder.where("latest", true);
-        })
-        .fetch();
-
-      // filter those which are not empty
-      if (!groupes) {
-        return response.status(404).send({
-          message: "no data found",
-          status: "error",
-        });
-      } else {
-        return response.status(200).send({
-          status: "success",
-          data: groupes,
-        });
-      }
-    } catch (error) {
-      return response.status(404).send({
-        status: "error",
-        message: "error occured",
-        error: error,
-      });
-    }
+    const cols = await Collections.query()
+      .where("latest", true)
+      .distinct(["new_boys", "new_girls", "abandoned_girls", "abandoned_boys"])
+      .fetch();
+    return response.send({ data: cols });
   }
 }
 
