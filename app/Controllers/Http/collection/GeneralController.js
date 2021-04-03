@@ -67,6 +67,7 @@ class GeneralController {
       "collectorName",
       "actualBoys",
       "actualGirls",
+      "moisDe",
     ]);
 
     try {
@@ -86,6 +87,7 @@ class GeneralController {
       newCol.attended_girls = form.attendedGirls;
       newCol.actual_boys = form.actualBoys;
       newCol.actual_girls = form.actualGirls;
+      newCol.mois_de = form.moisDe;
       // save
       await newCol.save();
 
@@ -119,6 +121,7 @@ class GeneralController {
       "actualBoys",
       "actualGirls",
       "latest",
+      "moisDe",
     ]);
 
     /** get targeted collection */
@@ -150,6 +153,7 @@ class GeneralController {
         collection.actual_girls = inputs.actualGirls;
         collection.verified = true;
         collection.latest = inputs.latest;
+        collection.mois_de = inputs.moisDe;
         /** save the updates */
         await collection.save();
 
