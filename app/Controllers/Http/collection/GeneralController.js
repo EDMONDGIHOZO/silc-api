@@ -9,10 +9,10 @@ class GeneralController {
     let { page } = request.all();
     page = page ? page : 1;
 
-    const records = await General.query().paginate(page ? page : 1, 12);
+    const records = await General.query().with('group').paginate(page ? page : 1, 12);
 
     if (records) {
-      return response.status(302).send({
+      return response.status(200).send({
         message: "found data",
         data: records,
       });
