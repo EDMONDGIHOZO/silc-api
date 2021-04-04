@@ -95,6 +95,23 @@ class MainController {
     });
   }
 
+  // ** ------------------------- EDIT PAROISSE DETAILS ---------------------- */
+  async update({ params, request, response }) {
+    // gather the request info
+    let inputs = request.only(["name"]);
+
+    // find the craimed paroisse
+    const paroisse = await Paroisse.query().where("id", params.id).first();
+
+    if (paroisse) {
+      paroisse.merge({ name: inputs.name });
+      await paroisse.save();
+      return response.send({ message: "success", data: paroisse });
+    } else {
+      return response.send({ message: "not Found" });
+    }
+  }
+
   /** --------------------------- DELETE  PAROISSE  -------------------------- */
   async destroy({ params, response }) {
     /** get the paroisse */
