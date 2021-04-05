@@ -36,6 +36,9 @@ Route.group(() => {
   Route.get("me", "user/MainController.profile").middleware(["auth"]);
 }).prefix("user");
 
+// download excel
+Route.get("user-download/:format", "user/MainController.download");
+
 /** user roles **/
 Route.group(() => {
   Route.resource("roles", "user/RoleController");

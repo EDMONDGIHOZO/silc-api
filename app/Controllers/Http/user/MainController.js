@@ -1,12 +1,16 @@
 "use strict";
 
 const User = use("App/Models/User");
+const SpreadSheet = use("SpreadSheet");
 
 class MainController {
   /** -================== show all users from database ======================= */
   async index({ response }) {
     /** get all the users */
-    const users = await User.query().with('role').withCount('collections').fetch();
+    const users = await User.query()
+      .with("role")
+      .withCount("collections")
+      .fetch();
     if (users.length === 0) {
       response.status(200).send({
         message: "no users in db yet",
@@ -65,9 +69,7 @@ class MainController {
 
   async update({ request, params, response }) {
     /*** get the user update inputs  */
-    let { status } = request.only([
-      "status"
-    ]);
+    let { status } = request.only(["status"]);
 
     /** get the target user */
     try {
@@ -137,6 +139,21 @@ class MainController {
     return response.status(200).send({
       message: "user removed from database",
     });
+  }
+
+  // download the excel
+  async download({ params, response }) {
+    const ss = new SpreadSheet(response, params.format);
+    const users = await User.all();
+    const data = [];
+
+    data.push(["id", "First Name", "email", "user name"]);
+    users.toJSON().forEach((user) => {
+      data.push([user.id, user.firstname, user.email, user.username]);
+    });
+
+    ss.addSheet("Users", data);
+    ss.download("Silc Users");
   }
 }
 
