@@ -11,15 +11,17 @@ class MainController {
       "name",
       "maxCredit",
       "monthlyInterest",
-      "endDate",
       "dioceseId",
       "paroisseId",
+      "creationDate",
+      "girls",
+      "boys",
+      "startDate",
+      "endDate",
     ]);
     const groupe_id = params.id;
     /** generate unique code for group */
     const code = crypto({ length: 4, type: "distinguishable" });
-    /** combine group name with code given */
-    const groupCode = code;
 
     /** find the target groupe */
     const groupe = await Groupe.query().where("id", groupe_id).first();
@@ -30,6 +32,11 @@ class MainController {
       groupe.credit_group_max_time = inputs.maxCredit;
       groupe.monthly_interest = inputs.monthlyInterest;
       groupe.end_date = inputs.endDate;
+      groupe.start_date = inputs.endDate;
+      groupe.Date_de_creation = inputs.creationDate;
+      groupe.initial_girls_number = inputs.girls;
+      groupe.initial_boys_number = inputs.boys;
+      groupe.diocese_id = inputs.dioceseId;
       groupe.paroisse_id = inputs.paroisseId;
       await groupe.save();
 
