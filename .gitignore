@@ -6,6 +6,8 @@ tmp
 
 # Environment variables, never commit this file
 .env
+.idea/*
+
 
 # The development sqlite file
 database/*.sqlite
