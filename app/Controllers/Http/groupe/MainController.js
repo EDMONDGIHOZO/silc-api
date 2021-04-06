@@ -32,7 +32,7 @@ class MainController {
       groupe.credit_group_max_time = inputs.maxCredit;
       groupe.monthly_interest = inputs.monthlyInterest;
       groupe.end_date = inputs.endDate;
-      groupe.start_date = inputs.endDate;
+      groupe.start_date = inputs.startDate;
       groupe.Date_de_creation = inputs.creationDate;
       groupe.initial_girls_number = inputs.girls;
       groupe.initial_boys_number = inputs.boys;

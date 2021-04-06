@@ -9,7 +9,11 @@ class GeneralController {
     let { page } = request.all();
     page = page ? page : 1;
 
-    const records = await General.query().with('group').paginate(page ? page : 1, 12);
+    const records = await General.query()
+      .with("group", (builder) => {
+        builder.with("diocese"), builder.with("paroisse");
+      })
+      .paginate(page ? page : 1, 12);
 
     if (records) {
       return response.status(200).send({
