@@ -75,10 +75,6 @@ class GeneralController {
       "moisDe",
     ]);
 
-
-      await General.query().where("id", form.colid).delete();
-  
-
     try {
       const newCol = new General();
       newCol.collection_date = form.collectionDate;
@@ -168,6 +164,7 @@ class GeneralController {
 
         return response.status(200).send({
           message: "collection updated",
+          data: collection
         });
       } catch (error) {
         return response.status(404).send({
