@@ -12,6 +12,7 @@ class RelationController {
       "creditedAmount",
       "groupBankAccount",
       "groupBankCredit",
+      "groupCreditAmount"
     ]);
 
     await Relation.query().where("collection_id", form.collectionId).delete();
@@ -24,6 +25,7 @@ class RelationController {
       newRel.groupe_ouvert_compte_bancaire = form.groupBankAccount;
       newRel.groupe_ayant_contracte_credit_bancaire = form.groupBankCredit;
       newRel.montant_de_credit_bancaire_contracte = form.creditedAmount;
+      newRel.montant_de_credit_bancaire_contracte_groupe = form.groupCreditAmount;
 
       await newRel.save();
       return response

@@ -38,6 +38,7 @@ Route.group(() => {
 
 // download excel
 Route.get("user-download/:format", "user/MainController.download");
+Route.get("caisse-download/:id/:format/:date/:code", "CaisseController.download");
 
 /** user roles **/
 Route.group(() => {

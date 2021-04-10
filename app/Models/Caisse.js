@@ -7,6 +7,10 @@ class Caisse extends Model {
   static get table() {
     return "caisses";
   }
+
+  collections() {
+    return this.belongsTo("App/Models/GeneralRecord", "collection_id", "id");
+  }
 }
 
 module.exports = Caisse;
