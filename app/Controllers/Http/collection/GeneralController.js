@@ -58,6 +58,7 @@ class GeneralController {
     /** gather the user information */
 
     let form = request.only([
+      "colid",
       "collectionDate",
       "groupId",
       "newBoys",
@@ -73,6 +74,10 @@ class GeneralController {
       "actualGirls",
       "moisDe",
     ]);
+
+
+      await General.query().where("id", form.colid).delete();
+  
 
     try {
       const newCol = new General();
