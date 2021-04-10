@@ -159,12 +159,13 @@ class GeneralController {
         collection.verified = true;
         collection.latest = inputs.latest;
         collection.mois_de = inputs.moisDe;
+        collection.group_id = inputs.groupId;
         /** save the updates */
         await collection.save();
 
         return response.status(200).send({
           message: "collection updated",
-          data: collection
+          data: collection,
         });
       } catch (error) {
         return response.status(404).send({
